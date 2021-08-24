@@ -1,21 +1,36 @@
-.MMM-EFA-departures .table {
-    border-spacing: 0px 0px;
-    border-collapse: separate;
-    text-align: left;
-    background-color: black;
-    color:white;
+.MMM-EFA-departures ul {
+	text-align: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.MMM-EFA-departures .departures {
+    /*font-size .small*/
+}
+
+.MMM-EFA-departures .departures__departure {
+    margin-bottom: 5px;
 }
 
 .MMM-EFA-departures .departures__departure__line {
-    border-spacing: 10px 0px;
-    border-collapse: separate;
-    text-align: left;
-    color:white;
-    font-weight: normal;
+    /*font-size .xsmall */
+    background: #aaa;
+    color: #000;
+    padding: 1px 3px;
+    margin-right: 15px;
+    vertical-align: 3px;
+    border-radius: 2px;
+
+    border-width: 2px;
+    border-top-style: none;
+    border-right-style: solid;
+    border-bottom-style: none;
+    border-left-style: solid;
+    border-color: red;
 }
 
-
-.MMM-EFA-departures .departures__departure__line__number {
+.MMM-EFA-departures .departures__departure__line__realtime {
     /*font-size .xsmall */
     background: #aaa;
     color: #000;
@@ -25,18 +40,19 @@
     border-radius: 2px;
 }
 
-.MMM-EFA-departures .departures__departure {
-    padding-left: 10px;
-    padding-top:0px;
-    text-align: right;
-    font-weight: normal;
-    color: white;
-    position:relative;
-    min-width: 100px;
+
+.MMM-EFA-departures .departures__departure__direction {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: top;
 }
 
-
 .MMM-EFA-departures .departures__departure__time-relative {
+    position: absolute;
+    right: 0;
     opacity: 1;
     transition: opacity 1s;
 }
@@ -48,7 +64,7 @@
     transition: opacity 1s;
 }
 
-.MMM-EFA-departures .departures__delay {
+.MMM-EFA-departures .departures__departure__delay {
     padding-left: 10px;
     padding-top:0px;
     text-align: right;
@@ -56,8 +72,10 @@
     display:none;
 }
 
-.MMM-EFA-departures .departures__delay__time {
-    background: #FF7575;
+.MMM-EFA-departures .departures__departure__delay__time {
+/*    background: #FF7575;*/
+	position: absolute;
+/*	background: #FF0000;*/
     color: #000;
     padding: 1px 3px;
     margin-right: 15px;
@@ -65,6 +83,15 @@
     border-radius: 2px;
 }
 
+/*.MMM-EFA-departures .hidden         { visibility: hidden; }*/
+/*.MMM-EFA-departures .unhidden         { visibility: visible; }*/
+
+.hidden         	{ visibility: hidden; }
+.unhidden       	{ visibility: visible; }
+.backgroundRed     	{ background: #FF0000 }
+.backgroundGreen   	{ background: #00FF00 }
+.backgroundWhite   	{ background: #FFFFFF }
+
 .departures__departure--show-time .departures__departure__time-clock { opacity: 1; }
 .departures__departure--show-time .departures__departure__time-relative { opacity: 0; }
-.departures__departure--show-time .departures__delay { display: block; }
+.departures__departure--show-time .departures__departure__delay { display: block; }
