@@ -12,7 +12,7 @@ MagicMirror² module to show departures for public transport stations using the 
 		efaUrl: "http://efa107.efa.de/efaws2/default/XML_DM_REQUEST",
 		stopID: "25000031",
 		stopName: "MMM-EFA is loading", //initial module name
-		lines: ["all"], //lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['all'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
+		lines: ["all"], //lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['stop'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
 		reload: 60000, //interval in ms (60000=60s)
 		realDepTime: true, //use real-time data; if there is no realtime data, you have red bars on the side of the line number
 		toggleDepTime: true, //Toggle relative/absolute time
