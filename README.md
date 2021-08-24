@@ -1,5 +1,7 @@
 # MMM-EFA-departures
 MagicMirror² module to show departures for public transport stations using the EFA system.
+This is a fork from https://github.com/Dom1n1c/MMM-EFA-departures.
+Thanks for the incredible basics.
 
 **Example Configuration for Hannover HBF/Main Station:**
 ```
