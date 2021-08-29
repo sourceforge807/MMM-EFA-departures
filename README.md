@@ -21,7 +21,8 @@ npm install
 	module: "MMM-EFA-departures",
 	header: "N&auml;chste Bahn",
 	position: "top_right",
-	config: {
+	config:
+	{
 		efaUrl: "http://efa107.efa.de/efaws2/default/XML_DM_REQUEST",
 		stopID: "25000031",
 		stopName: "MMM-EFA is loading", 		//initial module name
@@ -34,8 +35,13 @@ npm install
 		fadePoint: 0.25, 				//Start on 1/4th of the list. (1/maxDepartures would be ideal)
 		maxDepartures: 10, 				//maximum amount of departures displayed
 		shortenMessage: 12, 				//false or a number
-		departureReplace: {"Hannover" : "H.-", "Hildesheim" : "HI.-", "Langenhagen" : "Lgh.-"}, //wich names will be replaced shorten?
- 		}
+		departureReplace:
+		{
+			"Hannover" : "H.-",
+			"Hildesheim" : "HI.-",
+			"Langenhagen" : "Lgh.-"
+		}, //wich names will be replaced and shorten?
+ 	}
 },
 
 ```
