@@ -50,7 +50,7 @@ To extract and search the line info, use the searchStation.sh script.
 # Confguration Options
 
 | Name           | Description |
-|----------------|---------------------------------|
+| :---: | --- |
 | `efaUrl`      | Url to the efa page for the XML_DM_REQUEST. Do not change this url!! <br><br> **Default value:** _http://efa107.efa.de/efaws2/default/XML_DM_REQUEST_ |
 | `stopID`    | stopID offered by the provider or using the searchStation.sh script. |
 | `stopName`<BR>`optional`| initial module name. You can change it...or not.<br><br>**Possible values:** [text] <br> **Default value:** _MMM-EFA is loading_
