@@ -50,10 +50,10 @@ To extract and search the line info, use the searchStation.sh script.
 # Confguration Options
 
 | Name           | Description |
-| :---: | --- |
+|----------------|---------------------------------|
 | `efaUrl`      | Url to the efa page for the XML_DM_REQUEST. Do not change this url!! <br><br> **Default value:** _http://efa107.efa.de/efaws2/default/XML_DM_REQUEST_ |
 | `stopID`    | stopID offered by the provider or using the searchStation.sh script. |
-| `stopName`<BR>`optional`| initial module name. You can change it...or not.<br><br>**Possible values:** [text] <br> **Default value:** _MMM-EFA is loading_
+| stopName<BR>`optional`| initial module name. You can change it...or not.<br><br>**Possible values:** [text] <br> **Default value:** _MMM-EFA is loading_
 | `lines`<BR>`optional`| Whitch lines needs to be fetched? If you will use spicific lines, use the stateless field in the result from the search script (except the last field :j21)<br><br> **Possible values:** `['all']`,`['stop']` or maybe `['DDB:92E01: :H','DDB:92E01: :R']`  <br> **Default value:** `['stop']`
 | `reload`<BR>`optional`| Reloadintervall in seconds. <br><br> **Possible values:**  <br> **Default value:** `60`
 | `realDepTime`<BR>`optional`| Use realtimedata or not. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
