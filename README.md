@@ -1,5 +1,5 @@
 # MMM-EFA-departures
-MagicMirror² module to show departures for public transport stations using the EFA system.
+MagicMirror² module to show departures for public transport stations using the EFA system. It will work for all Traffic Companys wich use this service.
 This is a fork from https://github.com/Dom1n1c/MMM-EFA-departures.
 Thanks for the incredible basics.
 
