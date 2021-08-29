@@ -1,0 +1,16 @@
+{
+  "NOW": "Now",
+  "MINUTE": "min.",
+  "HOUR": "hour",
+  "DAY": "day",
+  "DAYS": "days",
+  "MONTH": "month",
+  "MONTHS": "months",
+  "YEAR": "year",
+  "YEARS": "years",
+  "FROM": "form ",
+  "LOADING": "Loading module......",
+  "NODATA": "No data...",
+  "CANCELLED": "cancelled",
+  "UNKNOWN": "unknown"
+}
