@@ -49,20 +49,20 @@ To extract and search the line info, use the searchStation.sh script.
 
 # Confguration Options
 
-| Name           | Description |
-|----------------|---------------------------------|
-| `efaUrl`      | Url to the efa page for the XML_DM_REQUEST. Do not change this url!! <br><br> **Default value:** _http://efa107.efa.de/efaws2/default/XML_DM_REQUEST_ |
-| `stopID`    | stopID offered by the provider or using the searchStation.sh script. |
-| stopName<BR>`optional`| initial module name. You can change it...or not.<br><br>**Possible values:** [text] <br> **Default value:** _MMM-EFA is loading_
-| `lines`<BR>`optional`| Whitch lines needs to be fetched? If you will use spicific lines, use the stateless field in the result from the search script (except the last field :j21)<br><br> **Possible values:** `['all']`,`['stop']` or maybe `['DDB:92E01: :H','DDB:92E01: :R']`  <br> **Default value:** `['stop']`
-| `reload`<BR>`optional`| Reloadintervall in seconds. <br><br> **Possible values:**  <br> **Default value:** `60`
-| `realDepTime`<BR>`optional`| Use realtimedata or not. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
-| `toggleDepTime`<BR>`optional`| Toggle between relativ/ absolute time.<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
-| `toggleDepTimePerReload`<BR>`optional`| Intervall for toggeling the departuretime. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `6` (seconds) |
-| `fade`<BR>`optional`| Fade the departures?<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
-| `fadePoint`<BR>`optional`| Where to start fade? <br><br> **Possible values:** `0` (top of the list) - `1` (bottom of list) <br> **Default value:** `0.25`
-| `maxDepartures`<BR>`optional`| How many departures will be shown? <br><br>**Possible values:** `0` - `?` <br> **Default value:** `4` |
-| `shortenMessage`<BR>`optional`| Shortens the name of the targets. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `12` |
-| `language`<BR>`optional`| Select the Language. <br><br> **Possible values:** `de`, `en` <br> **Default value:** `de` |
-| `departureReplace`<BR>`optional`| Names wich will be replaced with something you want an the departures will be shorten. <br><br> **Possible values:** `[text]` <br> **Default value:** `{"Hannover" : "H.-", "Hildesheim" : "HI.-", "Langenhagen" : "Lgh.-"}` |
+| Name           | Optional | Description |
+|----------------|---------------|---------------------------------|
+| `efaUrl`|| Url to the efa page for the XML_DM_REQUEST. Do not change this url!! <br><br> **Default value:** _http://efa107.efa.de/efaws2/default/XML_DM_REQUEST_ |
+| `stopID`|| stopID offered by the provider or using the searchStation.sh script. |
+| `stopName`|X| initial module name. You can change it...or not.<br><br>**Possible values:** [text] <br> **Default value:** `MMM-EFA is loading`
+| `lines`|X| Whitch lines needs to be fetched? If you will use spicific lines, use the stateless field in the result from the search script (except the last field :j21)<br><br> **Possible values:** `['all']`,`['stop']` or maybe `['DDB:92E01: :H','DDB:92E01: :R']`  <br> **Default value:** `['stop']`
+| `reload`|X| Reloadintervall in seconds. <br><br> **Possible values:**  <br> **Default value:** `60`
+| `realDepTime`|X| Use realtimedata or not. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
+| `toggleDepTime`|X| Toggle between relativ/ absolute time.<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `toggleDepTimePerReload`|X| Intervall for toggeling the departuretime. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `6` (seconds) |
+| `fade`|X| Fade the departures?<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `fadePoint`|X| Where to start fade? <br><br> **Possible values:** `0` (top of the list) - `1` (bottom of list) <br> **Default value:** `0.25`
+| `maxDepartures`|X| How many departures will be shown? <br><br>**Possible values:** `0` - `?` <br> **Default value:** `4` |
+| `shortenMessage`|X| Shortens the name of the targets. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `12` |
+| `language`|X| Select the Language. <br><br> **Possible values:** `de`, `en` <br> **Default value:** `de` |
+| `departureReplace`|X| Names wich will be replaced with something you want an the departures will be shorten. <br><br> **Possible values:** `[text]` <br> **Default value:** `{"Hannover" : "H.-", "Hildesheim" : "HI.-", "Langenhagen" : "Lgh.-"}` |
 
