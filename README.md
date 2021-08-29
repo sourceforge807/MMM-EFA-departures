@@ -3,6 +3,17 @@ MagicMirror² module to show departures for public transport stations using the 
 This is a fork from https://github.com/Dom1n1c/MMM-EFA-departures.
 Thanks for the incredible basics.
 
+## Installing the module
+
+To install the module, assuming you have MagicMirror installed with the default configuration:
+
+```shell
+cd ~/MagicMirror/modules
+git clone https://github.com/sourceforge807/MMM-EFA-departures.git
+cd MMM-EFA-departures/
+npm install
+```
+
 **Example Configuration for Hannover HBF/Main Station:**
 ```
 {
