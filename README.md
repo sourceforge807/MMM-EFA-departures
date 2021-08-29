@@ -34,6 +34,7 @@ npm install
 		fadePoint: 0.25, 				//Start on 1/4th of the list. (1/maxDepartures would be ideal)
 		maxDepartures: 10, 				//maximum amount of departures displayed
 		shortenMessage: 12, 				//false or a number
+		departureReplace: {"Hannover" : "H.-", "Hildesheim" : "HI.-", "Langenhagen" : "Lgh.-"}, //wich names will be replaced shorten?
  		}
 },
 
@@ -63,4 +64,5 @@ To extract and search the line info, use the searchStation.sh script.
 | `maxDepartures`   | How many departures will be shown? <br><br>**Possible values:** `0` - `?` <br> **Default value:** `4` |
 | `shortenMessage`  | Shortens the name of the targets. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `12` |
 | `language`          | Select the Language. <br><br> **Possible values:** `de`, `en` <br> **Default value:** `de` |
+| `departureReplace`          | Names wich will be replaced with something you want an the departures will be shorten. <br><br> **Possible values:** `[text]` <br> **Default value:** `{"Hannover" : "H.-", "Hildesheim" : "HI.-", "Langenhagen" : "Lgh.-"}` |
 
