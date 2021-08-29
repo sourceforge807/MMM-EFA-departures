@@ -34,3 +34,22 @@ Thanks for the incredible basics.
 you can get the information by viewing the source (in Chrome for instance) of the EFA-Page  
 **view-source:http://efa107.efa.de/efaws2/default/XML_DM_REQUEST**  
 To extract and search the line info, use the searchStation.sh script. 
+
+# Confguration Options
+
+| Name           | Description |
+|----------------|---------------------------------|
+| `efaUrl`      | Url to the efa page for the XML_DM_REQUEST. Do not Cchange this url!! <br><br> **Default value:** _http://efa107.efa.de/efaws2/default/XML_DM_REQUEST_ |
+| `stopID`    | stopID offered by the provider or using the searchStation.sh script. |
+| `stopName`     | initial module name. You can change it...or not.<br><br>**Possible values:** [text] <br> **Default value:** _MMM-EFA is loading_
+| `lines` | Whitch lines needs to be fetched? If you will use spicific lines, use the stateless field in the result from the search script (except the last field :j21)<br><br> **Possible values:** `['all']`,`['stop']` or maybe `['DDB:92E01: :H','DDB:92E01: :R']`  <br> **Default value:** `['stop']`
+| `reload`     | Reloadintervall in seconds <br><br> **Possible values:**  <br> **Default value:** `60`
+| `realDepTime` | Use realtimedata or not. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
+| `toggleDepTime`     | Toggle between relativ/ absolute time.<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `toggleDepTimePerReload`           | Intervall for toggeling the departuretime. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `6` (seconds) |
+| `fade` | Fade the departures?.<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `fadePoint`      | Where to start fade? <br><br> **Possible values:** `0` (top of the list) - `1` (bottom of list) <br> **Default value:** `0.25`
+| `maxDepartures`   | How many departures will be shown? **Possible values:** `0` - `?` <br> **Default value:** `4` |
+| `shortenMessage`  | Shortens the name of the targets. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `12` |
+| `language`          | Select the Language. <br><br> **Possible values:** `de`, `en` <br> **Default value:** `de` |
+
