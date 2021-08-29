@@ -24,6 +24,7 @@ Module.register("MMM-EFA-departures", {
 		maxDepartures: 4,									//maximum amount of departures displayed
 		shortenMessage: 12, 								//false or a number
 		language: "de",										//select de or en
+		departureReplace: {"Hannover" : "H.-", "Hildesheim" : "HI.-"},
     },
 
     start: function () {
@@ -36,23 +37,23 @@ Module.register("MMM-EFA-departures", {
 			self.sendSocketNotification("CONFIG", self.config);
 		}, this.config.reload);
 
-        moment.updateLocale(this.config.language,
+		moment.updateLocale(this.config.language,
 		{
 			relativeTime :
 			{
 				future : '%s',
 				past : '%s',
 				s : this.translate("NOW"),
-				m : "1 " + this.translate("MINUTE"),
-				mm : "%d " + this.translate("MINUTE"),
-				h : "+1 " + this.translate("HOUR"),
-				hh : "%d " + this.translate("HOUR"),
-				d : "+1 " + this.translate("DAY"),
-				dd : "%d " + this.translate("DAYS"),
-				M : "+1 " + this.translate("MONTH"),
-				MM : "%s " + this.translate("MONTHS"),
-				y : "+1 " + this.translate("YEAR"),
-				yy : "%s " + this.translate("YEARS"),
+				m : this.translate("IN") + "1 " + this.translate("MINUTE"),
+				mm : this.translate("IN") + "%d " + this.translate("MINUTE"),
+				h : this.translate("IN") + "+1 " + this.translate("HOUR"),
+				hh : this.translate("IN") + "%d " + this.translate("HOUR"),
+				//d : this.translate("IN") + "+1 " + this.translate("DAY"),//notwendig?
+				//dd : this.translate("IN") + "%d " + this.translate("DAYS"),//notwendig?
+				//M : this.translate("IN") + "+1 " + this.translate("MONTH"),//notwendig?
+				//MM : this.translate("IN") + "%s " + this.translate("MONTHS"),//notwendig?
+				//y : this.translate("IN") + "+1 " + this.translate("YEAR"),//notwendig?
+				//yy : this.translate("IN") + "%s " + this.translate("YEARS"),//notwendig?
 			}
 		});
 	},
@@ -85,7 +86,8 @@ Module.register("MMM-EFA-departures", {
 		}
 	},
                     
-	getDom: function () {
+	getDom: function ()
+	{
 		var wrapper = document.createElement("div");
 		var header = document.createElement("header");
 		header.innerHTML = this.config.stopName;
@@ -135,11 +137,17 @@ Module.register("MMM-EFA-departures", {
 					var departureTime = new Date(departures[d].dateTime.year, departures[d].dateTime.month-1, departures[d].dateTime.day, departures[d].dateTime.hour, departures[d].dateTime.minute, 0);
 				}
 
-				var message = departures[d].servingLine.direction;
-				if(this.config.shortenMessage && message.length > this.config.shortenMessage)
+				var departure = departures[d].servingLine.direction;
+
+				if(this.config.shortenMessage && departure.length > this.config.shortenMessage)
 				{
-					//message = message.slice(0, this.config.shortenMessage) + "&#8230;";
-					message = message.slice(0, 20) + "&#8230;";
+					departure= this.departureTransform(departure);
+				}
+
+				// if is the message still to long
+				if(this.config.shortenMessage && departure.length > this.config.shortenMessage)
+				{
+					//departure = departure.slice(0, this.config.shortenMessage) + "&#8230;";
 				}
 
 				// slicing for long ice number + names
@@ -156,7 +164,7 @@ Module.register("MMM-EFA-departures", {
 				if (departures[d].hasOwnProperty('realtimeStatus') === true){
 
 					switch (departures[d].realtimeStatus) {
-            			case 'TRIP_CANCELLED':
+						case 'TRIP_CANCELLED':
 							backgroundColor = "backgroundPurple";
 							tripText = this.translate("CANCELLED");
 							tripCancelled = "style=\"text-decoration:line-through;\""; //collision with style.opacity -> fading ??
@@ -167,13 +175,13 @@ Module.register("MMM-EFA-departures", {
 					}
 				}
 
-                if (this.config.realDepTime === true && departures[d].servingLine.realtime === '1')
+				if (this.config.realDepTime === true && departures[d].servingLine.realtime === '1')
 				{
-					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + tripCancelled + '>'+ servingLineNumber +'</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + tripCancelled + '>' + message + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time-relative small bright">' + moment(departureTime).fromNow() + '</span><span class="departures__departure__time-clock small bright">' + moment(departureTime).format('HH:mm') + '</span>';
-                }
+					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + tripCancelled + '>'+ servingLineNumber +'</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + tripCancelled + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time-relative small bright">' + moment(departureTime).fromNow() + '</span><span class="departures__departure__time-clock small bright">' + moment(departureTime).format('HH:mm') + '</span>';
+				}
 				else
 				{
-					departuresLI.innerHTML = '<span class="departures__departure__line xsmall" ' + tripCancelled + '>'+ servingLineNumber +'</span><span class="departures__departure__direction small ' + backgroundColor + '" ' + tripCancelled + '>' + message + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time-relative small bright">' + moment(departureTime).fromNow() + '</span><span class="departures__departure__time-clock small bright">' + moment(departureTime).format('HH:mm') + '</span>';
+					departuresLI.innerHTML = '<span class="departures__departure__line xsmall" ' + tripCancelled + '>'+ servingLineNumber +'</span><span class="departures__departure__direction small ' + backgroundColor + '" ' + tripCancelled + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time-relative small bright">' + moment(departureTime).fromNow() + '</span><span class="departures__departure__time-clock small bright">' + moment(departureTime).format('HH:mm') + '</span>';
 				}
 
 				if (this.config.fade && this.config.fadePoint < 1)
@@ -205,5 +213,53 @@ Module.register("MMM-EFA-departures", {
 			wrapper.appendChild(departuresUL);
 		}
 		return wrapper;
+	},
+
+	/* shorten(string, maxLength)
+	 * Shortens a string if it's longer than maxLength.
+	 * Adds an ellipsis to the end.
+	 *
+	 * argument string string - The string to shorten.
+	 * argument maxLength number - The max length of the string.
+	 *
+	 * return string - The shortened string.
+	 */
+	shorten: function (string, maxLength)
+	{
+		if (string.length > maxLength)
+		{
+			return string.slice(0, maxLength) + "&hellip;"; // &#8230;
+		}
+
+		return string;
+	},
+
+
+	/* departureTransform(departure)
+	 * Transforms the departure for usage.
+	 * Replaces parts of the text as defined in config.departureReplace.
+	 * Shortens departure based on config.shortenMessage
+	 *
+	 * argument departure string - The departure to transform.
+	 *
+	 * return string - The transformed departure.
+	 */
+	departureTransform: function (departure)
+	{
+		for (var needle in this.config.departureReplace)
+		{
+			var replacement = this.config.departureReplace[needle];
+
+			var regParts = needle.match(/^\/(.+)\/([gim]*)$/);
+			if (regParts)
+			{
+			  // the parsed pattern is a regexp.
+			  needle = new RegExp(regParts[1], regParts[2]);
+			}
+
+			departure = departure.replace(needle, replacement);
+		}
+		departure = this.shorten(departure, this.config.shortenMessage);
+		return departure;
 	}
 });
