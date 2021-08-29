@@ -17,7 +17,6 @@ Module.register("MMM-EFA-departures", {
         lines: ['stop'],                                    //lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['all'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
         reload: 60000,                                     //interval in ms (60000=60s)
         realDepTime: false,                                 //use real-time data
-        //relativeDepTime: true,                             // When "toggle" is disabled change between absolute/relative Time,not implemented yet
         toggleDepTime: true,                              //Toggle relative/absolute time
         toggleDepTimePerReload: 6,                         //Every 10 seconds
         fade: true,                                        //fade brightness
