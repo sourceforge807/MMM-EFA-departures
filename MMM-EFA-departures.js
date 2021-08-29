@@ -12,7 +12,7 @@ Module.register("MMM-EFA-departures", {
 
     defaults: {
 		efaUrl: "http://efa107.efa.de/efaws2/default/XML_DM_REQUEST",
-		stopID: "25001691",									//stopID offered by the provider (Düsseldorf HBF in this case)
+		stopID: "25000031",									//stopID offered by the provider (Hannover HBF in this case)
 		stopName: "MMM-EFA is loading",						//initial module name
 		lines: ['stop'],									//lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['all'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
 		reload: 60000,										//interval in ms (60000=60s)
