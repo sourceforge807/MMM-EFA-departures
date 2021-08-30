@@ -62,7 +62,7 @@ To extract and search the line info, use the searchStation.sh script.
 | `stopName`|X| initial module name. You can change it...or not.<br><br>**Possible values:** [text] <br> **Default value:** `MMM-EFA is loading`
 | `lines`|X| Whitch lines needs to be fetched? If you will use spicific lines, use the stateless field in the result from the search script (except the last field :j21)<br><br> **Possible values:** `['all']`,`['stop']` or maybe `['DDB:92E01: :H','DDB:92E01: :R']`  <br> **Default value:** `['stop']`
 | `reload`|X| Reloadintervall in seconds. <br><br> **Possible values:**  <br> **Default value:** `60`
-| `realDepTime`|X| Use realtimedata or not. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
+| `realDepTime`|X| Use realtimedata or not. If there is no realtime data available, it will be shown in italic.<br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
 | `toggleDepTime`|X| Toggle between relativ/ absolute time.<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `toggleDepTimePerReload`|X| Intervall for toggeling the departuretime. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `6` (seconds) |
 | `fade`|X| Fade the departures?<br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
