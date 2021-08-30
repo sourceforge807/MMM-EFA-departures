@@ -41,6 +41,8 @@ npm install
 			"Hildesheim" : "HI.-",
 			"Langenhagen" : "Lgh.-"
 		}, //wich names will be replaced and shorten?
+		lineInfos: true,				//show additional line info
+
  	}
 },
 
@@ -71,6 +73,7 @@ To extract and search the line info, use the searchStation.sh script.
 | `shortenMessage`|X| Shortens the name of the targets. <br><br> **Possible values:** `0` - `?` <br> **Default value:** `12` |
 | `language`|X| Select the Language. <br><br> **Possible values:** `de`, `en` <br> **Default value:** `de` |
 | `departureReplace`|X| Names wich will be replaced with something you want an the departures will be shorten. <br><br> **Possible values:** `[text]` <br> **Default value:** `{"Hannover" : "H.-", "Hildesheim" : "HI.-", "Langenhagen" : "Lgh.-"}` |
+| `linieInfos`|X| Show additional line info. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true` |
 
 ## Licence
 MIT License
