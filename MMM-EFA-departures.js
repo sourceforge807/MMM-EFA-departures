@@ -13,18 +13,19 @@ Module.register("MMM-EFA-departures", {
     defaults: {
 		efaUrl: "http://efa107.efa.de/efaws2/default/XML_DM_REQUEST",
 		stopID: "25000031",									//stopID offered by the provider (Hannover HBF in this case)
-		stopName: "MMM-EFA is loading",						//initial module name
+		stopName: "MMM-EFA is loading",								//initial module name
 		lines: ['stop'],									//lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['all'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
 		reload: 60000,										//interval in ms (60000=60s)
 		realDepTime: false,									//use real-time data
-		toggleDepTime: true,								//Toggle relative/absolute time
-		toggleDepTimePerReload: 6,							//Every 6 seconds
-		fade: true,											//fade brightness
+		toggleDepTime: true,									//Toggle relative/absolute time
+		toggleDepTimePerReload: 6,								//Every 6 seconds
+		fade: true,										//fade brightness
 		fadePoint: 0.25,									//Start on 1/4th of the list. (1/maxDepartures would be ideal)
 		maxDepartures: 4,									//maximum amount of departures displayed
-		shortenMessage: 12, 								//false or a number
+		shortenMessage: 12, 									//false or a number
 		language: "de",										//select de or en
 		departureReplace: {"Hannover" : "H.-", "Hildesheim" : "HI.-"},
+	    	lineInfos: true,									//show additional line info
     },
 
     start: function () {
@@ -200,7 +201,7 @@ Module.register("MMM-EFA-departures", {
 				}
 				departuresUL.appendChild(departuresLI);
 
-				if ( departures[d].hasOwnProperty('lineInfos') === true )
+				if ( departures[d].hasOwnProperty('lineInfos') === true && this.config.lineInfos === true )
 				{
 					var lineInfoLI = document.createElement("li");
 					lineInfoLI.className = 'marquee';
