@@ -14,6 +14,21 @@ cd MMM-EFA-departures/
 npm install
 ```
 
+## Updating the module
+
+Navigate to your module folder:
+```shell
+cd ~/MagicMirror/modules/MMM-EFA-departures
+```
+use command to pull new git from:
+```shell
+git pull
+```
+If you are experiencing the following message “your local changes to the following files would be overwritten by merge” because you have done local edits run this before (NOTE! backup the files you have edited in case you will need to pull some edits back, for exampel the CSS file if you have customized the look of the module:
+```shell
+git reset --hard
+```
+
 **Example Configuration for Hannover HBF/Main Station:**
 ```
 {
