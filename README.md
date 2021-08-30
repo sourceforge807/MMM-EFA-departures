@@ -29,7 +29,7 @@ If you are experiencing the following message “your local changes to the follo
 git reset --hard
 ```
 
-**Example Configuration for Hannover HBF/Main Station:**
+## Example Configuration for Hannover HBF/Main Station:
 ```
 {
 	disabled: false,
@@ -70,7 +70,7 @@ you can get the information by viewing the source (in Chrome for instance) of th
 **view-source:http://efa107.efa.de/efaws2/default/XML_DM_REQUEST**  
 To extract and search the line info, use the searchStation.sh script. 
 
-# Confguration Options
+## Confguration Options
 
 | Name           | Optional | Description |
 |----------------|---------------|---------------------------------|
