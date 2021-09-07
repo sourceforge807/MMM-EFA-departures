@@ -4,5 +4,9 @@
   "LOADING": "Lade Modul......",
   "NODATA": "Keine Daten vorhanden...",
   "CANCELLED": " Storniert ",
-  "UNKNOWN": "Unbekannt"
+  "UNKNOWN": " Unbekannt",
+  "EXTRA_TRIP": " Verst&auml;rker",
+  "NOSTOPID": "Bitte die korrekte Station ID einsetzen: ",
+  "NOEFAURL": "Bitte den efaUrl einsetzen: ",
+  "DOT": "."
 }
