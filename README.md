@@ -136,5 +136,7 @@ SOFTWARE.
 
 
 ## Versions
-0.0.1 initial
-0.1.0 Some bugfixes an new features
+| Version           | Description |
+|----------------|---------------|
+| `0.0.1`|initial|
+| `0.1.0`|Some bugfixes an new features.|
