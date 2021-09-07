@@ -244,6 +244,7 @@ Module.register("MMM-EFA-departures", {
 
 				// shows the delay as a style
 				var delay = '';
+				var servingLineDelay = '';
 				if ( this.config.showDelay === true && departures[d].servingLine.hasOwnProperty('delay') === true )
 				{
 					if ( departures[d].servingLine.delay > 0 && departures[d].servingLine.delay <= 5 )
@@ -259,21 +260,23 @@ Module.register("MMM-EFA-departures", {
 						delay = 'font-weight: bold; color: red\;';
 					}
 					
-					var sign = "";
+					var sign = '';
 					if ( departures[d].servingLine.delay > 0 && this.config.showServingLineDelay === true )
 					{
-						sign = "+";
-						servingLineDelay = ' ( ' + sign + departures[d].servingLine.delay + ' ) ';
+						sign = '+';
+						servingLineDelay = ' (' + sign + departures[d].servingLine.delay + ') ';
 					}
 					else if ( departures[d].servingLine.delay < 0 && this.config.showServingLineDelay === true )
 					{
-						sign = "-";
-						servingLineDelay = ' ( ' + sign + departures[d].servingLine.delay + ' ) ';
+						sign = '-';
+						servingLineDelay = ' (' + sign + departures[d].servingLine.delay + ')';
 					}
 					else
 					{
-						sign = "";
+						sign = '';
+						servingLineDelay = '';
 					}
+
 
 				}
 
