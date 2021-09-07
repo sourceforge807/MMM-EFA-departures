@@ -156,6 +156,14 @@ Module.register("MMM-EFA-departures", {
 				}, (this.config.reload / this.config.toggleDepTimePerReload));
 			}
 
+			//sort by countdown
+			function compare(a, b)
+			{
+				if (parseInt(a.countdown) > parseInt(b.countdown)) return 1;
+				if (parseInt(a.countdown) > parseInt(b.countdown)) return -1;
+				return 0;
+			}
+			departures.sort(compare);
 
 			for ( var d in departures )
 			{
@@ -224,6 +232,11 @@ Module.register("MMM-EFA-departures", {
 							backgroundColor = "backgroundPurple";
 							tripText = this.translate("CANCELLED");
 							tripCancelled = 'text-decoration:line-through\;'; //collision with style.opacity -> fading ??
+							break;
+						case 'EXTRA_TRIP':
+							backgroundColor = "backgroundPurple";
+							tripText = this.translate("EXTRA_TRIP");
+							tripCancelled = 'text-decoration:underline red\;';
 							break;
 						default:
 							backgroundColor = "backgroundWhite";
