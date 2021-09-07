@@ -31,15 +31,26 @@ git reset --hard
 ```
 
 ## Dependencies
-Due moment.js is in maintenance mode we change to luxon.
+* luxon<br>
+Because moment.js is in maintenance mode I change to luxon.
 Install luxon in modules/MMM-EFA-departures with:
 ```shell
 npm install --save luxon
 ```
+* node.js<br>
 You also need node.js 13+ vor full ICU support. For older versions of node.js you need this guide: https://moment.github.io/luxon/#/install
+* npm<br>
+* [request](https://www.npmjs.com/package/request)<br>
+
+## Languages
+As of version 0.1.0, MMM-EFA-departures features language support for `German (de)` and `English (en)` mirrors.
+
+## Prerequisite
+A working installation of [MagicMirror<sup>2</sup>](https://github.com/MichMich/MagicMirror)
 
 ## Example Configuration for Hannover HBF/Main Station:
 ```
+...
 {
 	disabled: false,
 	module: "MMM-EFA-departures",
@@ -68,7 +79,8 @@ You also need node.js 13+ vor full ICU support. For older versions of node.js yo
 		lineInfos: true,				//show additional line info
 
  	}
-},
+}
+...
 ```
 
 **Getting Station and Line IDs**  
