@@ -4,5 +4,9 @@
   "LOADING": "Loading module......",
   "NODATA": "No data...",
   "CANCELLED": " cancelled ",
-  "UNKNOWN": "unknown"
+  "UNKNOWN": " unknown",
+  "EXTRA_TRIP": " Extra trip",
+  "NOSTOPID": "Please set the correct Station ID: ",
+  "NOEFAURL": "Please set efaUrl key: ",
+  "DOT": "."
 }
