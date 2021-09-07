@@ -12,22 +12,22 @@ Module.register("MMM-EFA-departures", {
 	requiresVersion: '2.1.0',
     defaults: {
 		efaUrl: "http://efa107.efa.de/efaws2/default/XML_DM_REQUEST",
-		stopID: "25000031",									//stopID offered by the provider (Hannover HBF in this case)
+		stopID: "25000031",							//stopID offered by the provider (Hannover HBF in this case)
 		stopName: "MMM-EFA is loading",						//initial module name
-		lines: ['stop'],									//lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['all'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
-		reload: 60000,										//interval in ms (60000=60s)
-		realDepTime: false,									//use real-time data
-		toggleDepTime: true,								//Toggle relative/absolute time
-		toggleDepTimePerReload: 6,							//Every 6 seconds
-		fade: true,											//fade brightness
-		fadePoint: 0.25,									//Start on 1/4th of the list. (1/maxDepartures would be ideal)
-		maxDepartures: 4,									//maximum amount of departures displayed
-		maxLinesOverall : 10,								//include text messages; this overrides the max departures lines
-		shortenMessage: 12, 								//false or a number
-		language: "ru",										//select de or en
+		lines: ['stop'],							//lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['all'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
+		reload: 60000,								//interval in ms (60000=60s)
+		realDepTime: false,							//use real-time data
+		toggleDepTime: true,							//Toggle relative/absolute time
+		toggleDepTimePerReload: 6,						//Every 6 seconds
+		fade: true,								//fade brightness
+		fadePoint: 0.25,							//Start on 1/4th of the list. (1/maxDepartures would be ideal)
+		maxDepartures: 4,							//maximum amount of departures displayed
+		maxLinesOverall : 10,							//include text messages; this overrides the max departures lines
+		shortenMessage: 12, 							//false or a number
+		language: "ru",								//select de or en
 		departureReplace: {"Hannover" : "H.-", "Hildesheim" : "HI.-"},
-		lineInfos: true,									//show additional line info
-		stopInfos: false,									//show additional stop info
+		lineInfos: true,							//show additional line info
+		stopInfos: false,							//show additional stop info
 		showTrainColor: true,
 		colorStadtbahn: "#8E44AD",
 		colorSBahn: "#CB4335",
@@ -87,7 +87,7 @@ Module.register("MMM-EFA-departures", {
 			en: "translations/en.json"
 		};
 	},
-   
+
 	socketNotificationReceived: function (notification, payload)
 	{
 		if (notification === "TRAMS" + this.config.stopID)
@@ -101,19 +101,35 @@ Module.register("MMM-EFA-departures", {
 	getDom: function ()
 	{
 		var wrapper = document.createElement("div");
+
+		if ( this.config.stopID === "" )
+		{
+			wrapper.innerHTML = this.translate("NOSTOPID") + this.name + this.translate("DOT");
+			wrapper.className = "dimmed light small";
+			return wrapper;
+		}
+
+		if ( this.config.efaUrl === "" )
+		{
+			wrapper.innerHTML = this.translate("NOEFAURL") + this.name + this.translate("DOT");
+			wrapper.className = "dimmed light small";
+			return wrapper;
+		}
+
 		var header = document.createElement("header");
 		header.innerHTML = this.config.stopName;
 		wrapper.appendChild(header);
+
 		this.loaded = true;
 
-		if (this.loaded === false)
+		if ( this.loaded === false )
 		{
 			var text = document.createElement("div");
 			text.innerHTML = this.translate("LOADING");
 			text.className = "dimmed light small";
 			wrapper.appendChild(text);
 		}
-		else if (!this.efa_data)
+		else if ( !this.efa_data )
 		{
 			var text = document.createElement("div");
 			text.innerHTML = this.translate("NODATA");
@@ -130,7 +146,7 @@ Module.register("MMM-EFA-departures", {
 
 
 			// classie ersetzen mit https://www.w3schools.com/howto/howto_js_toggle_class.asp ?!?!
-			if (this.config.toggleDepTime)
+			if ( this.config.toggleDepTime )
 			{
 				window.clearInterval(this.toggleTimeInt);
 				this.toggleTimeInt = window.setInterval(function()
@@ -140,7 +156,7 @@ Module.register("MMM-EFA-departures", {
 			}
 
 
-			for (var d in departures)
+			for ( var d in departures )
 			{
 				if ( counter > this.config.maxLinesOverall )
 				{
@@ -150,7 +166,7 @@ Module.register("MMM-EFA-departures", {
 				var departuresLI = document.createElement("li");
 				departuresLI.className = 'departures__departure';
 
-				if (this.config.realDepTime === true && departures[d].servingLine.realtime === '1' && departures[d].hasOwnProperty('realDateTime') === true)
+				if ( this.config.realDepTime === true && departures[d].servingLine.realtime === '1' && departures[d].hasOwnProperty('realDateTime') === true )
 				{
 					var departureTime = luxon.DateTime.local(
 														parseInt(departures[d].realDateTime.year),
@@ -176,21 +192,21 @@ Module.register("MMM-EFA-departures", {
 
 				// humanize seconds
 				var diff = Math.round((departureTime- luxon.DateTime.now()) / (1000*60));
-				if ((diff <= 1 && diff >= 0) || (diff >= -1 && diff <= 0))
+				if ( (diff <= 1 && diff >= 0) || (diff >= -1 && diff <= 0) )
 				{
 					departureTimeRelative = this.translate("NOW");
 				}
 
 				// slicing and transform departures
 				var departure = departures[d].servingLine.direction;
-				if(this.config.shortenMessage && departure.length > this.config.shortenMessage)
+				if ( this.config.shortenMessage && departure.length > this.config.shortenMessage )
 				{
 					departure = this.departureTransform(departure);
 				}
 
 				// slicing for long ice number + names
 				var servingLineNumber = departures[d].servingLine.number;
-				if(servingLineNumber.length > 8)
+				if ( servingLineNumber.length > 8 )
 				{
 					servingLineNumber = servingLineNumber.slice(0, 7);
 				}
@@ -201,8 +217,7 @@ Module.register("MMM-EFA-departures", {
 				var styleTrainNumber = '';
 				var styleTrainName = '';
 
-				if (departures[d].hasOwnProperty('realtimeStatus') === true){
-
+				if ( departures[d].hasOwnProperty('realtimeStatus') === true ){
 					switch (departures[d].realtimeStatus) {
 						case 'TRIP_CANCELLED':
 							backgroundColor = "backgroundPurple";
@@ -217,7 +232,7 @@ Module.register("MMM-EFA-departures", {
 				}
 
 				var trainColor = '';
-				if (this.config.showTrainColor === true)
+				if ( this.config.showTrainColor === true )
 				{
 					var trainColor = this.getTrainColor(departures[d].servingLine.name, departures[d].servingLine.trainType);
 				}
@@ -228,17 +243,17 @@ Module.register("MMM-EFA-departures", {
 
 				// shows the delay as a style
 				var delay = '';
-				if (this.config.showDelay === true && departures[d].servingLine.hasOwnProperty('delay') === true)
+				if ( this.config.showDelay === true && departures[d].servingLine.hasOwnProperty('delay') === true )
 				{
-					if (departures[d].servingLine.delay > 0 && departures[d].servingLine.delay <= 5)
+					if ( departures[d].servingLine.delay > 0 && departures[d].servingLine.delay <= 5 )
 					{
 						delay = 'font-weight: bold\;';
 					}
-					else if (departures[d].servingLine.delay > 5 && departures[d].servingLine.delay <= 10)
+					else if ( departures[d].servingLine.delay > 5 && departures[d].servingLine.delay <= 10 )
 					{
 						delay = 'font-weight: bold; color: orange\;';
 					}
-					else if (departures[d].servingLine.delay > 10)
+					else if ( departures[d].servingLine.delay > 10 )
 					{
 						delay = 'font-weight: bold; color: red\;';
 					}
@@ -248,7 +263,7 @@ Module.register("MMM-EFA-departures", {
 				styleTrainNumber = 'style="' + tripCancelled + trainColor + '"';
 				styleTrainName = 'style="' + tripCancelled + delay + '"';
 
-				if (this.config.realDepTime === true && departures[d].servingLine.realtime === '1')
+				if ( this.config.realDepTime === true && departures[d].servingLine.realtime === '1' )
 				{
 					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + styleTrainNumber + '>' + servingLineNumber + '</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + styleTrainName + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time__realtime-relative small bright" ' + styleTrainName + '>' + departureTimeRelative + '</span><span class="departures__departure__time__realtime-clock small bright" ' + styleTrainName + '>' + departureTimeAbsolute + '</span>';
 					counter++;
@@ -260,15 +275,15 @@ Module.register("MMM-EFA-departures", {
 				}
 
 
-				if (this.config.fade && this.config.fadePoint < 1)
+				if ( this.config.fade && this.config.fadePoint < 1 )
 				{
-					if (this.config.fadePoint < 0)
+					if ( this.config.fadePoint < 0 )
 					{
 						this.config.fadePoint = 0;
 					}
 					var startingPoint = departures.length * this.config.fadePoint;
 					var steps = departures.length - startingPoint;
-					if (d >= startingPoint)
+					if ( d >= startingPoint )
 					{
 						var currentStep = d - startingPoint;
 						departuresLI.style.opacity = 1 - (1 / steps * currentStep);
@@ -319,10 +334,11 @@ Module.register("MMM-EFA-departures", {
 	 */
 	shorten: function (string, maxLength)
 	{
-		if (string.length > maxLength)
+		if ( string.length > maxLength )
 		{
 			return string.slice(0, maxLength) + "&hellip;"; // &#8230;
 		}
+
 		return string;
 	},
 
@@ -338,12 +354,12 @@ Module.register("MMM-EFA-departures", {
 	 */
 	departureTransform: function (departure)
 	{
-		for (var needle in this.config.departureReplace)
+		for ( var needle in this.config.departureReplace )
 		{
 			var replacement = this.config.departureReplace[needle];
 
 			var regParts = needle.match(/^\/(.+)\/([gim]*)$/);
-			if (regParts)
+			if ( regParts )
 			{
 			  // the parsed pattern is a regexp.
 			  needle = new RegExp(regParts[1], regParts[2]);
@@ -370,7 +386,7 @@ Module.register("MMM-EFA-departures", {
 		var self = this;
 		keys.forEach(function(key)
 		{
-			if (isNaN(parseInt(self.config[key])))
+			if ( isNaN(parseInt(self.config[key])) )
 			{
 				self.config[key] = self.defaults[key];
 			}
@@ -386,7 +402,7 @@ Module.register("MMM-EFA-departures", {
 		var self = this;
 		keys.forEach(function(key)
 		{
-			if (!CSS.supports("color", self.config[key]))
+			if ( !CSS.supports("color", self.config[key]) )
 			{
 				self.config[key] = self.defaults[key];
 			}
@@ -397,7 +413,7 @@ Module.register("MMM-EFA-departures", {
 	{
 		var style = '';
 
-		if (type == "ICE")
+		if ( type == "ICE" )
 		{
 			name = type;
 		}
@@ -432,6 +448,7 @@ Module.register("MMM-EFA-departures", {
 			default:
 				style = 'border-color:black; border-style: solid\; border-radius: 6px\;"';
 		}
+
 		return style;
 	}
 });
