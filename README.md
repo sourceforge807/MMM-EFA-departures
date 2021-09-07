@@ -12,7 +12,6 @@ cd ~/MagicMirror/modules
 git clone https://github.com/sourceforge807/MMM-EFA-departures.git
 cd MMM-EFA-departures/
 npm install
-npm run rebuild
 ```
 
 ## Updating the module
@@ -39,6 +38,11 @@ npm install --save luxon
 ```
 * node.js<br>
 You also need node.js 13+ vor full ICU support. For older versions of node.js you need this guide: https://moment.github.io/luxon/#/install
+hint: run
+```shell
+npm run rebuild
+```
+after update the node.js
 * npm<br>
 * [request](https://www.npmjs.com/package/request)<br>
 
