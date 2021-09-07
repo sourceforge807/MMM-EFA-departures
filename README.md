@@ -37,7 +37,6 @@ npm install --save luxon
 ```
 You also need node.js 13+ vor full ICU support. For older versions of node.js you need this guide: https://moment.github.io/luxon/#/install
 
-
 ## Example Configuration for Hannover HBF/Main Station:
 ```
 {
@@ -69,15 +68,16 @@ You also need node.js 13+ vor full ICU support. For older versions of node.js yo
 
  	}
 },
-
 ```
-
-
 
 **Getting Station and Line IDs**  
 you can get the information by viewing the source (in Chrome for instance) of the EFA-Page  
 **view-source:http://efa107.efa.de/efaws2/default/XML_DM_REQUEST**  
 To extract and search the line info, use the searchStation.sh script. 
+
+## Screenshot
+![grafik](https://user-images.githubusercontent.com/30810603/132315707-edf2e469-0bba-4ed2-8ea4-be5c8114b2f5.png)
+![grafik](https://user-images.githubusercontent.com/30810603/132316131-7b1c753e-c612-46bb-88eb-eb5072f9c97f.png)
 
 ## Confguration Options
 
@@ -110,7 +110,6 @@ To extract and search the line info, use the searchStation.sh script.
 | `colorBus`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#0404B4` |
 | `colorErsatzverkehr`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#4B4040` |
 
-
 ## Licence
 MIT License
 
@@ -133,7 +132,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
 
 ## Versions
 | Version           | Description |
