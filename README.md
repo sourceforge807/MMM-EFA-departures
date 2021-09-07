@@ -12,6 +12,7 @@ cd ~/MagicMirror/modules
 git clone https://github.com/sourceforge807/MMM-EFA-departures.git
 cd MMM-EFA-departures/
 npm install
+npm run rebuild
 ```
 
 ## Updating the module
