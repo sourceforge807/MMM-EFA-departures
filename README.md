@@ -29,15 +29,6 @@ If you are experiencing the following message “your local changes to the follo
 git reset --hard
 ```
 
-## Dependencies
-Due moment.js is in maintenance mode we change to luxon.
-Install luxon in modules/MMM-EFA-departures with:
-```shell
-npm install --save luxon
-```
-You also need node.js 13+ vor full ICU support. For older versions of node.js you need this guide: https://moment.github.io/luxon/#/install
-
-
 ## Example Configuration for Hannover HBF/Main Station:
 ```
 {
@@ -98,18 +89,6 @@ To extract and search the line info, use the searchStation.sh script.
 | `language`|X| Select the Language. <br><br> **Possible values:** `de`, `en` <br> **Default value:** `de` |
 | `departureReplace`|X| Names wich will be replaced with something you want an the departures will be shorten. <br><br> **Possible values:** `[text]` <br> **Default value:** `{"Hannover" : "H.-", "Hildesheim" : "HI.-", "Langenhagen" : "Lgh.-"}` |
 | `linieInfos`|X| Show additional line info. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true` |
-| `stopInfos`|X| Show additional stop info. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false` |
-| `showDelay`|X| Show the delay, Delays of up to 5 minutes are shown in bold. Delays between 5 and 10 minutes are shown in bold and orange. Delays of 10 minutes or more are displayed in bold and red.  <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true` |
-| `showTrainColor`|X| Shows the train type in color. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true` |
-| `colorStadtbahn`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#8E44AD` |
-| `colorSBahn`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#CB4335` |
-| `colorRBahn`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#17A589` |
-| `colorIC`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#6495ED` |
-| `colorICE`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#F1C40F` |
-| `colorEC`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#A04C1A` |
-| `colorBus`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#0404B4` |
-| `colorErsatzverkehr`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#4B4040` |
-
 
 ## Licence
 MIT License
