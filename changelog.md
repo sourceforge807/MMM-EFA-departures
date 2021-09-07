@@ -16,7 +16,8 @@ This module adheres to [Semantic Versioning](http://semver.org/).
 - `checkColor()` for the colored train type
 - Check if is the `stopID` and `efaURL` is empty
 - Add `text-decoration` to `line-through` if the trip ist cancelled
-- Add some css attributes 
+- Add some css attributes
+- `servingLineDelay` option to show the delay of the servinLine in minutes
 
 ### Fixed
 - Fixed some smaller bugs
