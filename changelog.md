@@ -15,10 +15,13 @@ This module adheres to [Semantic Versioning](http://semver.org/).
 - `sanitizeNumbers()` in the config
 - `checkColor()` for the colored train type
 - Check if is the `stopID` and `efaURL` is empty
-- add `text-decoration` to `line-through` if the trip ist cancelled
+- Add `text-decoration` to `line-through` if the trip ist cancelled
+- Add some css attributes 
 
 ### Fixed
 - Fixed some smaller bugs
+- Fixed the translations (de, en)
+- Fixed the css toggle attributes
 
 ### Changed
 - Remove moment.js and use luxon instead
