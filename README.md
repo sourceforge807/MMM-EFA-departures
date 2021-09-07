@@ -126,6 +126,7 @@ To extract and search the line info, use the searchStation.sh script.
 | `colorEC`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#A04C1A` |
 | `colorBus`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#0404B4` |
 | `colorErsatzverkehr`|X| Color of the type. <br><br> **Possible values:** All of CSS.supports() colors. <br> **Default value:** `#4B4040` |
+| `showServingLineDelay`|X| Shows the servingLine delay. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false` |
 
 ## Licence
 MIT License
