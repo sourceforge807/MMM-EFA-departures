@@ -38,6 +38,7 @@ Module.register("MMM-EFA-departures", {
 		colorBus: "#0404B4",
 		colorErsatzverkehr: "#4B4040",
 		showDelay: true,
+	    	showServingLineDelay: false,
     },
 
     start: function () {
@@ -256,6 +257,22 @@ Module.register("MMM-EFA-departures", {
 					else if ( departures[d].servingLine.delay > 10 )
 					{
 						delay = 'font-weight: bold; color: red\;';
+					}
+					
+					var sign = "";
+					if ( departures[d].servingLine.delay > 0 && this.config.showServingLineDelay === true )
+					{
+						sign = "+";
+						servingLineDelay = ' ( ' + sign + departures[d].servingLine.delay + ' ) ';
+					}
+					else if ( departures[d].servingLine.delay < 0 && this.config.showServingLineDelay === true )
+					{
+						sign = "-";
+						servingLineDelay = ' ( ' + sign + departures[d].servingLine.delay + ' ) ';
+					}
+					else
+					{
+						sign = "";
 					}
 
 				}
