@@ -5,27 +5,39 @@
  * MIT Licensed.
  * Forked and modified by sourceforge807 / https://github.com/sourceforge807
  * 
- * v0.0.1
+ * v0.1.0
  */
 
 Module.register("MMM-EFA-departures", {
-
+	requiresVersion: '2.1.0',
     defaults: {
 		efaUrl: "http://efa107.efa.de/efaws2/default/XML_DM_REQUEST",
 		stopID: "25000031",									//stopID offered by the provider (Hannover HBF in this case)
-		stopName: "MMM-EFA is loading",								//initial module name
+		stopName: "MMM-EFA is loading",						//initial module name
 		lines: ['stop'],									//lines: ['DDB:92E01: :H','DDB:92E01: :R'], would only show the line S1 in both directions; ['all'] is a different option; if you will use specific lines use the stateless field in the result from the search script (except the last field :j21)
 		reload: 60000,										//interval in ms (60000=60s)
 		realDepTime: false,									//use real-time data
-		toggleDepTime: true,									//Toggle relative/absolute time
-		toggleDepTimePerReload: 6,								//Every 6 seconds
-		fade: true,										//fade brightness
+		toggleDepTime: true,								//Toggle relative/absolute time
+		toggleDepTimePerReload: 6,							//Every 6 seconds
+		fade: true,											//fade brightness
 		fadePoint: 0.25,									//Start on 1/4th of the list. (1/maxDepartures would be ideal)
 		maxDepartures: 4,									//maximum amount of departures displayed
-		shortenMessage: 12, 									//false or a number
-		language: "de",										//select de or en
+		maxLinesOverall : 10,								//include text messages; this overrides the max departures lines
+		shortenMessage: 12, 								//false or a number
+		language: "ru",										//select de or en
 		departureReplace: {"Hannover" : "H.-", "Hildesheim" : "HI.-"},
-	    	lineInfos: true,									//show additional line info
+		lineInfos: true,									//show additional line info
+		stopInfos: false,									//show additional stop info
+		showTrainColor: true,
+		colorStadtbahn: "#8E44AD",
+		colorSBahn: "#CB4335",
+		colorRBahn: "#17A589",
+		colorIC: "#6495ED",
+		colorICE: "#F1C40F",
+		colorEC: "#A04C1A",
+		colorBus: "#0404B4",
+		colorErsatzverkehr: "#4B4040",
+		showDelay: true,
     },
 
     start: function () {
@@ -38,25 +50,24 @@ Module.register("MMM-EFA-departures", {
 			self.sendSocketNotification("CONFIG", self.config);
 		}, this.config.reload);
 
-		moment.updateLocale(this.config.language,
-		{
-			relativeTime :
-			{
-				future : '%s',
-				past : '%s',
-				s : this.translate("NOW"),
-				m : this.translate("IN") + "1 " + this.translate("MINUTE"),
-				mm : this.translate("IN") + "%d " + this.translate("MINUTE"),
-				h : this.translate("IN") + "+1 " + this.translate("HOUR"),
-				hh : this.translate("IN") + "%d " + this.translate("HOUR"),
-				//d : this.translate("IN") + "+1 " + this.translate("DAY"),//notwendig?
-				//dd : this.translate("IN") + "%d " + this.translate("DAYS"),//notwendig?
-				//M : this.translate("IN") + "+1 " + this.translate("MONTH"),//notwendig?
-				//MM : this.translate("IN") + "%s " + this.translate("MONTHS"),//notwendig?
-				//y : this.translate("IN") + "+1 " + this.translate("YEAR"),//notwendig?
-				//yy : this.translate("IN") + "%s " + this.translate("YEARS"),//notwendig?
-			}
-		});
+		this.sanitizeNumbers([
+			"stopID",
+			"reload",
+			"toggleDepTimePerReload",
+			"maxDepartures",
+			"shortenMessage"
+		]);
+
+		this.checkColor([
+			"colorStadtbahn",
+			"colorSBahn",
+			"colorRBahn",
+			"colorIC",
+			"colorICE",
+			"colorEC",
+			"colorBus",
+			"colorErsatzverkehr"
+		]);
 	},
 
 	getStyles: function ()
@@ -66,14 +77,14 @@ Module.register("MMM-EFA-departures", {
 
 	getScripts: function()
 	{
-		return ["moment.js", "classie.js"];
+		return ["classie.js", this.file("/node_modules/luxon/build/global/luxon.min.js")];
 	},
 
 	getTranslations: function ()
 	{
 		return {
-			en: "translations/en.json",
-			de: "translations/de.json"
+			de: "translations/de.json",
+			en: "translations/en.json"
 		};
 	},
    
@@ -114,7 +125,11 @@ Module.register("MMM-EFA-departures", {
 			var departuresUL = document.createElement("ul");
 			departuresUL.className = 'small';
 			var departures = this.efa_data.departureList;
+			var counter = 1;
 
+
+
+			// classie ersetzen mit https://www.w3schools.com/howto/howto_js_toggle_class.asp ?!?!
 			if (this.config.toggleDepTime)
 			{
 				window.clearInterval(this.toggleTimeInt);
@@ -124,31 +139,53 @@ Module.register("MMM-EFA-departures", {
 				}, (this.config.reload / this.config.toggleDepTimePerReload));
 			}
 
+
 			for (var d in departures)
 			{
+				if ( counter > this.config.maxLinesOverall )
+				{
+					break;
+				}
+
 				var departuresLI = document.createElement("li");
 				departuresLI.className = 'departures__departure';
 
 				if (this.config.realDepTime === true && departures[d].servingLine.realtime === '1' && departures[d].hasOwnProperty('realDateTime') === true)
 				{
-					var departureTime = new Date(departures[d].realDateTime.year, departures[d].realDateTime.month-1, departures[d].realDateTime.day, departures[d].realDateTime.hour, departures[d].realDateTime.minute, 0);
+					var departureTime = luxon.DateTime.local(
+														parseInt(departures[d].realDateTime.year),
+														parseInt(departures[d].realDateTime.month),
+														parseInt(departures[d].realDateTime.day),
+														parseInt(departures[d].realDateTime.hour),
+														parseInt(departures[d].realDateTime.minute)
+													);
 				}
 				else
 				{
-					var departureTime = new Date(departures[d].dateTime.year, departures[d].dateTime.month-1, departures[d].dateTime.day, departures[d].dateTime.hour, departures[d].dateTime.minute, 0);
+					var departureTime = luxon.DateTime.local(
+														parseInt(departures[d].dateTime.year),
+														parseInt(departures[d].dateTime.month),
+														parseInt(departures[d].dateTime.day),
+														parseInt(departures[d].dateTime.hour),
+														parseInt(departures[d].dateTime.minute)
+													);
 				}
 
+				var departureTimeRelative = departureTime.setLocale(this.config.language).toRelative({ base: luxon.DateTime.now(), style: "short" });
+				var departureTimeAbsolute = departureTime.toLocaleString(luxon.DateTime.TIME_24_SIMPLE);
+
+				// humanize seconds
+				var diff = Math.round((departureTime- luxon.DateTime.now()) / (1000*60));
+				if ((diff <= 1 && diff >= 0) || (diff >= -1 && diff <= 0))
+				{
+					departureTimeRelative = this.translate("NOW");
+				}
+
+				// slicing and transform departures
 				var departure = departures[d].servingLine.direction;
-
 				if(this.config.shortenMessage && departure.length > this.config.shortenMessage)
 				{
-					departure= this.departureTransform(departure);
-				}
-
-				// if is the message still to long
-				if(this.config.shortenMessage && departure.length > this.config.shortenMessage)
-				{
-					//departure = departure.slice(0, this.config.shortenMessage) + "&#8230;";
+					departure = this.departureTransform(departure);
 				}
 
 				// slicing for long ice number + names
@@ -161,6 +198,8 @@ Module.register("MMM-EFA-departures", {
 				var backgroundColor = "";
 				var tripText = "";
 				var tripCancelled = "";
+				var styleTrainNumber = '';
+				var styleTrainName = '';
 
 				if (departures[d].hasOwnProperty('realtimeStatus') === true){
 
@@ -168,22 +207,58 @@ Module.register("MMM-EFA-departures", {
 						case 'TRIP_CANCELLED':
 							backgroundColor = "backgroundPurple";
 							tripText = this.translate("CANCELLED");
-							tripCancelled = "style=\"text-decoration:line-through;\""; //collision with style.opacity -> fading ??
+							tripCancelled = 'text-decoration:line-through\;'; //collision with style.opacity -> fading ??
+							break;
 						default:
 							backgroundColor = "backgroundWhite";
 							tripText= this.translate("UNKNOWN");
-							tripCancelled = "style=\"text-decoration:blink;\"";
+							tripCancelled = 'text-decoration:blink\;';
 					}
 				}
 
-				if (this.config.realDepTime === true && departures[d].servingLine.realtime === '1')
+				var trainColor = '';
+				if (this.config.showTrainColor === true)
 				{
-					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + tripCancelled + '>'+ servingLineNumber +'</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + tripCancelled + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time-relative small bright">' + moment(departureTime).fromNow() + '</span><span class="departures__departure__time-clock small bright">' + moment(departureTime).format('HH:mm') + '</span>';
+					var trainColor = this.getTrainColor(departures[d].servingLine.name, departures[d].servingLine.trainType);
 				}
 				else
 				{
-					departuresLI.innerHTML = '<span class="departures__departure__line xsmall" ' + tripCancelled + '>'+ servingLineNumber +'</span><span class="departures__departure__direction small ' + backgroundColor + '" ' + tripCancelled + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time-relative small bright">' + moment(departureTime).fromNow() + '</span><span class="departures__departure__time-clock small bright">' + moment(departureTime).format('HH:mm') + '</span>';
+					var trainColor = "";
 				}
+
+				// shows the delay as a style
+				var delay = '';
+				if (this.config.showDelay === true && departures[d].servingLine.hasOwnProperty('delay') === true)
+				{
+					if (departures[d].servingLine.delay > 0 && departures[d].servingLine.delay <= 5)
+					{
+						delay = 'font-weight: bold\;';
+					}
+					else if (departures[d].servingLine.delay > 5 && departures[d].servingLine.delay <= 10)
+					{
+						delay = 'font-weight: bold; color: orange\;';
+					}
+					else if (departures[d].servingLine.delay > 10)
+					{
+						delay = 'font-weight: bold; color: red\;';
+					}
+
+				}
+
+				styleTrainNumber = 'style="' + tripCancelled + trainColor + '"';
+				styleTrainName = 'style="' + tripCancelled + delay + '"';
+
+				if (this.config.realDepTime === true && departures[d].servingLine.realtime === '1')
+				{
+					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + styleTrainNumber + '>' + servingLineNumber + '</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + styleTrainName + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time__realtime-relative small bright" ' + styleTrainName + '>' + departureTimeRelative + '</span><span class="departures__departure__time__realtime-clock small bright" ' + styleTrainName + '>' + departureTimeAbsolute + '</span>';
+					counter++;
+				}
+				else
+				{
+					departuresLI.innerHTML = '<span class="departures__departure__line xsmall" ' + styleTrainNumber + '>' + servingLineNumber + '</span><span class="departures__departure__direction small ' + backgroundColor + '" ' + styleTrainName + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time-relative small bright" ' + styleTrainName + '>' + departureTimeRelative + '</span><span class="departures__departure__time-clock small bright" ' + styleTrainName + '>' + departureTimeAbsolute + '</span>';
+					counter++;
+				}
+
 
 				if (this.config.fade && this.config.fadePoint < 1)
 				{
@@ -201,16 +276,33 @@ Module.register("MMM-EFA-departures", {
 				}
 				departuresUL.appendChild(departuresLI);
 
-				if ( departures[d].hasOwnProperty('lineInfos') === true && this.config.lineInfos === true )
+				// bahnen
+				if ( departures[d].hasOwnProperty('lineInfos') === true && this.config.lineInfos === true && departures[d].lineInfos )
 				{
 					var lineInfoLI = document.createElement("li");
 					lineInfoLI.className = 'marquee';
 					lineInfoLI.innerHTML += '<span class="small" id="' + d + '">' + departures[d].lineInfos.lineInfo.infoText.subtitle + '</span>';
 					lineInfoLI.style.opacity = departuresLI.style.opacity;
 					departuresUL.appendChild(lineInfoLI);
+					counter++;
 				}
-            }
 
+
+				// busse
+				if ( departures[d].hasOwnProperty('stopInfos') === true && this.config.stopInfos === true && departures[d].stopInfos )
+				{
+					for ( var e in departures[d].stopInfos )
+					{
+						var stopInfoLI = document.createElement("li");
+						stopInfoLI.className = 'marquee';
+						stopInfoLI.innerHTML += '<span class="small" id="' + d + '">' + departures[d].stopInfos[e].infoText.subtitle + '</span>';
+						stopInfoLI.style.opacity = departuresLI.style.opacity;
+						departuresUL.appendChild(stopInfoLI);
+						counter++;
+					}
+					
+				}
+			}
 			wrapper.appendChild(departuresUL);
 		}
 		return wrapper;
@@ -231,7 +323,6 @@ Module.register("MMM-EFA-departures", {
 		{
 			return string.slice(0, maxLength) + "&hellip;"; // &#8230;
 		}
-
 		return string;
 	},
 
@@ -262,5 +353,85 @@ Module.register("MMM-EFA-departures", {
 		}
 		departure = this.shorten(departure, this.config.shortenMessage);
 		return departure;
+	},
+
+	/*
+	 * For any config parameters that are expected as integers, this
+	 * routine ensures they are numbers, and if they cannot be
+	 * converted to integers, then the module defaults are used.
+	 *
+	 * argument key int - The keys to sanitize.
+	 *
+	 * return key - The sanitized or the default key.
+	 */
+	sanitizeNumbers: function(keys)
+	{
+
+		var self = this;
+		keys.forEach(function(key)
+		{
+			if (isNaN(parseInt(self.config[key])))
+			{
+				self.config[key] = self.defaults[key];
+			}
+			else
+			{
+				self.config[key] = parseInt(self.config[key]);
+			}
+		});
+	},
+
+	checkColor: function(keys)
+	{
+		var self = this;
+		keys.forEach(function(key)
+		{
+			if (!CSS.supports("color", self.config[key]))
+			{
+				self.config[key] = self.defaults[key];
+			}
+		});
+	},
+
+	getTrainColor: function(name, type)
+	{
+		var style = '';
+
+		if (type == "ICE")
+		{
+			name = type;
+		}
+
+		switch (name) {
+			case 'Stadtbahn':
+				style = 'border-color:' + this.config.colorStadtbahn + '; border-style: solid; border-radius: 6px\;';
+				break;
+			case 'S-Bahn':
+				style = 'border-color:' + this.config.colorSBahn + '\; border-style: solid\; border-radius: 6px\;"';
+				break;
+			case 'R-Bahn':
+				style = 'border-color:' + this.config.colorRBahn + '\; border-style: solid\; border-radius: 6px\;"';
+				break;
+			case 'InterCity':
+				style = 'border-color:' + this.config.colorIC + '\; border-style: solid\; border-radius: 6px\;"';
+				break;
+			case 'ICE':
+			case 'InterCityExpress':
+				style = 'border-color:' + this.config.colorICE + '\; border-style: solid\; border-radius: 6px\;"';
+				break;
+			case 'EC':
+			case 'EuroCity':
+				style = 'border-color:' + this.config.colorEC + '\; border-style: solid\; border-radius: 6px\;"';
+				break;
+			case 'Bus':
+				style = 'border-color:' + this.config.colorBus + '\; border-style: solid\; border-radius: 6px\;"';
+				break;Ersatzverkehr
+			case 'Ersatzverkehr':
+				style = 'border-color:' + this.config.colorErsatzverkehr + '\; border-style: solid\; border-radius: 6px\;"';
+				break;Ersatzverkehr
+			default:
+				style = 'border-color:black; border-style: solid\; border-radius: 6px\;"';
+		}
+		return style;
 	}
 });
