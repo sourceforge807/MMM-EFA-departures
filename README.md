@@ -1,7 +1,25 @@
+[![npm version](https://img.shields.io/npm/v/full-icu.svg)](https://www.npmjs.com/package/full-icu)
+[![npm version](https://img.shields.io/npm/v/luxon.svg)](https://www.npmjs.com/package/luxon)
+[![GitHub issues](https://img.shields.io/github/issues/sourceforge807/mmm-efa-departures)](https://github.com/sourceforge807/mmm-efa-departures/issues)
+[![GitHub forks](https://img.shields.io/github/forks/sourceforge807/mmm-efa-departures)](https://github.com/sourceforge807/mmm-efa-departures/network)
+[![GitHub stars](https://img.shields.io/github/stars/sourceforge807/mmm-efa-departures)](https://github.com/sourceforge807/mmm-efa-departures/stargazers)
+[![GitHub license](https://img.shields.io/github/license/sourceforge807/mmm-efa-departures?style=plastic)](https://github.com/sourceforge807/mmm-efa-departures/blob/master/LICENSE)
 # MMM-EFA-departures
 MagicMirror² module to show departures for public transport stations using the EFA system. It will work for all Traffic Companys wich use this service.
 This is a fork from https://github.com/Dom1n1c/MMM-EFA-departures.
 Thanks for the incredible basics.
+
+- [Installing the module](#installing-the-module)
+- [Updating the module](#updating-the-module)
+- [Dependencies](#dependencies)
+- [Languages](#languages)
+- [Prerequisite](#prerequisite)
+- [Example Configuration](#example-configuration)
+- [Getting Station and Line IDs](#getting-station-and-line-ids)
+- [Screenshot](#screenshot)
+- [Confguration Options](#confguration-options)
+- [Licence](#licence)
+- [Versions](#versions)
 
 ## Installing the module
 
@@ -52,7 +70,8 @@ As of version 0.1.0, MMM-EFA-departures features language support for `German (d
 ## Prerequisite
 A working installation of [MagicMirror<sup>2</sup>](https://github.com/MichMich/MagicMirror)
 
-## Example Configuration for Hannover HBF/Main Station:
+## Example Configuration
+**for Hannover HBF/Main Station:**
 ```
 ...
 {
@@ -87,7 +106,7 @@ A working installation of [MagicMirror<sup>2</sup>](https://github.com/MichMich/
 ...
 ```
 
-**Getting Station and Line IDs**  
+### Getting Station and Line IDs  
 you can get the information by viewing the source (in Chrome for instance) of the EFA-Page  
 **view-source:http://efa107.efa.de/efaws2/default/XML_DM_REQUEST**  
 To extract and search the line info, use the searchStation.sh script. 
