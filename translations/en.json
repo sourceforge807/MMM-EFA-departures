@@ -5,7 +5,7 @@
   "NODATA": "No data...",
   "CANCELLED": " cancelled ",
   "UNKNOWN": " unknown",
-  "EXTRA_TRIP": " Extra trip",
+  "EXTRA_TRIP": " extra trip",
   "NOSTOPID": "Please set the correct Station ID: ",
   "NOEFAURL": "Please set efaUrl key: ",
   "DOT": "."
