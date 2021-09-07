@@ -46,10 +46,6 @@ module.exports = NodeHelper.create({
 
         request(options, (error, response, body) => {
 
-//			console.log('error:', error); // Print the error if one occurred
-//			console.log('statusCode:', response && response.statusCode);  
-//			console.log('body:', body);
-
     		if(!response || response === undefined || response.statusCode != 200) {
       			console.log("Error getting response");
 				error = 1;
@@ -58,9 +54,6 @@ module.exports = NodeHelper.create({
             if (!error || response.statusCode === 200) {
 
 				console.log("Socket notification TRAMS with '" + this.config.stopID + "' status code ==> '" + response.statusCode + "'");
-//				console.log(loaded);
-//				console.log(JSON.parse(body));
-//				console.log(body);
 
                 this.sendSocketNotification("TRAMS" + stopID, JSON.parse(body));
             } else if (response === undefined) {
