@@ -1,16 +1,8 @@
 {
   "NOW": "jetzt",
-  "MINUTE": "Min.",
-  "HOUR": "Std.",
-  "DAY": "Tag",
-  "DAYS": "Tage",
-  "MONTH": "Monat",
-  "MONTHS": "Monate",
-  "YEAR": "Jahr",
-  "YEARS": "Jahre",
   "FROM": "von ",
   "LOADING": "Lade Modul......",
   "NODATA": "Keine Daten vorhanden...",
-  "CANCELLED": "Storniert",
+  "CANCELLED": " Storniert ",
   "UNKNOWN": "Unbekannt"
 }
