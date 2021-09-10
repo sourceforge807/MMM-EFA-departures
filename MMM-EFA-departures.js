@@ -287,7 +287,7 @@ Module.register("MMM-EFA-departures", {
 					else
 					{
 						sign = '';
-						servingLineDelay = '';
+						servingLineDelay = '(0)';
 					}
 
 
@@ -298,7 +298,7 @@ Module.register("MMM-EFA-departures", {
 
 				if ( this.config.realDepTime === true && departures[d].servingLine.realtime === '1' )
 				{
-					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + styleTrainNumber + '>' + servingLineNumber + '</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + styleTrainName + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time__realtime-relative small bright" ' + styleTrainName + '>' + departureTimeRelative + '</span><span class="departures__departure__time__realtime-clock small bright" ' + styleTrainName + '>' + departureTimeAbsolute + '</span>';
+					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + styleTrainNumber + '>' + servingLineNumber + '</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + styleTrainName + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time__realtime-relative small bright" ' + styleTrainName + '>' + departureTimeRelative +  servingLineDelay + '</span><span class="departures__departure__time__realtime-clock small bright" ' + styleTrainName + '>' + departureTimeAbsolute + servingLineDelay + '</span>';
 					counter++;
 				}
 				else
