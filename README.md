@@ -114,6 +114,7 @@ To extract and search the line info, use the searchStation.sh script.
 ## Screenshot
 ![grafik](https://user-images.githubusercontent.com/30810603/132315707-edf2e469-0bba-4ed2-8ea4-be5c8114b2f5.png)
 ![grafik](https://user-images.githubusercontent.com/30810603/132316131-7b1c753e-c612-46bb-88eb-eb5072f9c97f.png)
+![grafik](https://user-images.githubusercontent.com/30810603/133593162-667c4ac4-c397-4a8c-bc49-e4fbc3c04dbe.png)
 
 ## Confguration Options
 
