@@ -45,7 +45,7 @@ Module.register("MMM-EFA-departures", {
 		var self = this;
 		Log.info("Starting module: " + this.name);
 
-		this.sendSocketNotification("CONFIG", this.config);
+		this.sendSocketNotification("CONFIG", self.config);
 		setInterval(function()
 		{
 			self.sendSocketNotification("CONFIG", self.config);
@@ -95,7 +95,7 @@ Module.register("MMM-EFA-departures", {
 		{
 			this.efa_data = payload;
 			this.config.stopName = this.translate("FROM") + payload.dm.input.input;
-			this.updateDom();           
+			this.updateDom(500);           
 		}
 	},
                     
@@ -160,7 +160,7 @@ Module.register("MMM-EFA-departures", {
 			function compare(a, b)
 			{
 				if (parseInt(a.countdown) > parseInt(b.countdown)) return 1;
-				if (parseInt(a.countdown) > parseInt(b.countdown)) return -1;
+				if (parseInt(b.countdown) > parseInt(a.countdown)) return -1;
 				return 0;
 			}
 			departures.sort(compare);
@@ -215,9 +215,9 @@ Module.register("MMM-EFA-departures", {
 
 				// slicing for long ice number + names
 				var servingLineNumber = departures[d].servingLine.number;
-				if ( servingLineNumber.length > 8 )
+				if ( servingLineNumber.length >= 9 )
 				{
-					servingLineNumber = servingLineNumber.slice(0, 7);
+					servingLineNumber = servingLineNumber.slice(0, 8);
 				}
 
 				var backgroundColor = "";
@@ -287,7 +287,7 @@ Module.register("MMM-EFA-departures", {
 					else
 					{
 						sign = '';
-						servingLineDelay = '';
+						servingLineDelay = '(0)';
 					}
 
 
@@ -298,7 +298,7 @@ Module.register("MMM-EFA-departures", {
 
 				if ( this.config.realDepTime === true && departures[d].servingLine.realtime === '1' )
 				{
-					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + styleTrainNumber + '>' + servingLineNumber + '</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + styleTrainName + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time__realtime-relative small bright" ' + styleTrainName + '>' + departureTimeRelative + '</span><span class="departures__departure__time__realtime-clock small bright" ' + styleTrainName + '>' + departureTimeAbsolute + '</span>';
+					departuresLI.innerHTML = '<span class="departures__departure__line__realtime xsmall" ' + styleTrainNumber + '>' + servingLineNumber + '</span><span class="departures__departure__direction__realtime small' + backgroundColor + '" ' + styleTrainName + '>' + departure + tripText + '&nbsp;&nbsp;</span><span class="departures__departure__time__realtime-relative small bright" ' + styleTrainName + '>' + departureTimeRelative +  servingLineDelay + '</span><span class="departures__departure__time__realtime-clock small bright" ' + styleTrainName + '>' + departureTimeAbsolute + servingLineDelay + '</span>';
 					counter++;
 				}
 				else
@@ -446,7 +446,7 @@ Module.register("MMM-EFA-departures", {
 	{
 		var style = '';
 
-		if ( type == "ICE" )
+		if ( type == "ICE" || type == "IC" || type == "NJ" )
 		{
 			name = type;
 		}
@@ -461,6 +461,8 @@ Module.register("MMM-EFA-departures", {
 			case 'R-Bahn':
 				style = 'border-color:' + this.config.colorRBahn + '\; border-style: solid\; border-radius: 6px\;"';
 				break;
+			case 'NJ':
+			case 'nightjet':
 			case 'InterCity':
 				style = 'border-color:' + this.config.colorIC + '\; border-style: solid\; border-radius: 6px\;"';
 				break;
@@ -474,10 +476,10 @@ Module.register("MMM-EFA-departures", {
 				break;
 			case 'Bus':
 				style = 'border-color:' + this.config.colorBus + '\; border-style: solid\; border-radius: 6px\;"';
-				break;Ersatzverkehr
+				break;
 			case 'Ersatzverkehr':
 				style = 'border-color:' + this.config.colorErsatzverkehr + '\; border-style: solid\; border-radius: 6px\;"';
-				break;Ersatzverkehr
+				break;
 			default:
 				style = 'border-color:black; border-style: solid\; border-radius: 6px\;"';
 		}
